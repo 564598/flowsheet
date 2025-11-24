@@ -1,6 +1,8 @@
+"""label模块"""
 import pygame
 
 class Label:
+    """文本显示框"""
     def __init__(self,
                  win: pygame.Surface, 
                  text: str,
@@ -11,8 +13,11 @@ class Label:
                  x: int,
                  y: int,
                  border: int = 1,
-                 bordercolor: tuple[int, int, int] = (0, 0, 0)
+                 bordercolor: tuple[int, int, int] = (0, 0, 0),
+                 fontname: str|None = None,
+                 fontsize: int = 32
                  ) -> None:
+        """初始化各项参数"""
         self.win = win
         self.text = text
         self.foreground = foreground
@@ -24,11 +29,12 @@ class Label:
         self.rect = pygame.Rect(x, y, width, height)
         self.border = border
         self.bordercolor = bordercolor
-        self.font = pygame.font.SysFont(None, 32)
+        self.font = pygame.font.SysFont(fontname, fontsize)
         
         self.border_rect = pygame.Rect(x - border,  y - border, width + 2 * border, height + 2 * border)
 
     def draw(self):
+        """绘制文本框"""
         if self.border > 0:
             pygame.draw.rect(self.win, color=self.bordercolor, rect=self.border_rect)
         
