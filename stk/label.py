@@ -6,13 +6,13 @@ class Label:
     def __init__(self,
                  win: pygame.Surface, 
                  text: str,
-                 foreground: tuple[int, int, int],
-                 background: tuple[int, int, int],
                  width: int,
                  height: int,
                  x: int,
                  y: int,
                  border: int = 1,
+                 foreground: tuple[int, int, int] = (0,0,0),
+                 background: tuple[int, int, int] = (200,200,200),
                  bordercolor: tuple[int, int, int] = (0, 0, 0),
                  fontname: str|None = None,
                  fontsize: int = 32
@@ -47,3 +47,7 @@ class Label:
         text_surf = self.font.render(self.text, True, self.foreground)
         text_rect = text_surf.get_rect(center=self.rect.center)
         self.win.blit(text_surf, text_rect)
+    
+    def goto(self,position:tuple[int,int]) -> None:
+        self.x = position[0]
+        self.y = position[1]

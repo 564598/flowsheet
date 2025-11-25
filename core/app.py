@@ -10,7 +10,7 @@ class App:
         self.screen = pygame.display.set_mode((1000,1000))
         pygame.display.set_caption(title="flowsheet")
         self.clock = pygame.time.Clock()
-        self.l = Button(self.screen,"exit",(0,0,0),(100,100,255),50,25,500,500,self._exit,border=4)
+        self.l = Button(self.screen,"exit",50,25,500,500,executed=self._exit)
         self.running = True
 
     def _exit(self) -> None:

@@ -2,7 +2,9 @@ flowsheet/
     |-- README.md
     |-- .gitignore
     |-- structure
-    |-- main.py                  ; 重命名 code.py，作为程序入口
+    |-- pyproject.toml
+    |-- requirements.txt
+    |-- main.py ; 程序入口
     |-- .git/
     |   |-- ...
     |-- __pycache__/
@@ -15,7 +17,7 @@ flowsheet/
     |   |-- __pycache__/
     |   |   |-- ...
     │   |-- __init__.py
-    │   |-- app.py             ; 将 Code 类移到这里
+    │   |-- app.py
     |-- stk/                    ; UI组件库
     |   |-- __pycache__/
     |   |   |-- ...
@@ -28,6 +30,11 @@ flowsheet/
     |   |   |-- ...
     │   |-- __init__.py
     │   |-- settings.py
+    |--tests/
+    |   |-- __pycache__/
+    |   |   |-- ...
+    |   |-- __init__.py
+    |   |-- test_stk.py
     ; |-- utils/                  ; 工具函数
     ;     |-- __init__.py
     ;     |-- helpers.py

@@ -3,25 +3,27 @@ from typing import Callable,Any
 
 from .label import Label
 
+def kong():
+    pass
+
 class Button(Label):
     """按钮类"""
     def __init__(self, 
                  win: pygame.Surface, 
                  text: str, 
-                 foreground: tuple[int, int, int], 
-                 background: tuple[int, int, int], 
                  width: int, 
                  height: int, 
                  x: int, 
                  y: int, 
-                 executed: Callable[[],Any],
+                 executed: Callable[[],Any] = kong,
                  border: int = 1, 
+                 foreground: tuple[int, int, int] = (0,0,0), 
+                 background: tuple[int, int, int] = (180,180,180), 
                  bordercolor: tuple[int, int, int] = (0,0,0), 
                  fontname: str | None = None, 
                  fontsize: int = 32
                 ) -> None:
-        """初始化各项参数"""
-        super().__init__(win, text, foreground, background, width, height, x, y, border, bordercolor, fontname, fontsize)
+        super().__init__(win, text, width, height, x, y, border, foreground, background, bordercolor, fontname, fontsize)
         self.executed = executed
 
     def _is_collidepoint(self,pos: tuple[int,int]) -> bool:

@@ -1,0 +1,18 @@
+[project]
+name = "flowsheet"
+requires-python = ">=3.9,<3.13"
+dependencies = [
+    "pygame>=2.6.0",
+    "colorama==0.4.6",
+    "iniconfig==2.3.0",
+    "packaging==25.0",
+    "pluggy==1.6.0",
+    "pygments==2.19.2",
+    "pytest==9.0.1"
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
