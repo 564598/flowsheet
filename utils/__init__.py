@@ -1,0 +1,1 @@
+from .log_write import log_info,log_error  # type: ignore

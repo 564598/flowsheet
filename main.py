@@ -1,12 +1,5 @@
 """程序入口"""
-import pygame
-import sys
-
-from core import App
+from core import terminal_logs
 
 if __name__ == "__main__":
-    m = App()
-    t = m.run()
-    print(t)
-    pygame.quit()
-    sys.exit(0)
+    terminal_logs()

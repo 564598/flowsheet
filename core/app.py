@@ -1,10 +1,11 @@
 import pygame
+import _io
 
 from stk import Button
 
 class App:
     """主程序管理"""
-    def __init__(self) -> None:
+    def __init__(self , log:_io.TextIOWrapper) -> None:
         """初始化"""
         pygame.init()
         self.screen = pygame.display.set_mode((1000,1000))
@@ -16,20 +17,16 @@ class App:
     def _exit(self) -> None:
         self.running = False
     
-    def run(self) -> bool|None:
+    def run(self) -> None:
         """开始程序"""
-        try:
-            while self.running:
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        return
-                    self.l.check_event(event)
-                
-                self.screen.fill((200,200,200))
-                self.l.draw()
+        while self.running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    return
+                self.l.check_event(event)
+            
+            self.screen.fill((200,200,200))
+            self.l.draw()
 
-                pygame.display.flip()
-                self.clock.tick(100)
-        except Exception as e:
-            print(f"error:{e}")
-            return
+            pygame.display.flip()
+            self.clock.tick(100)
