@@ -1,1 +1,1 @@
-from .log_write import log_info,log_error  # type: ignore
+from .log_write import LogSystem  # type: ignore

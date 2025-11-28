@@ -1,8 +1,11 @@
 import time
 import _io
 
-def log_info(file:_io.TextIOWrapper , info:str) -> None:
-    file.write(f"[{time.strftime("%Y.%m.%d-%H.%M.%S")}] [INFO] {info}\n")
+class LogSystem:
+    def __init__(self , file:_io.TextIOWrapper) -> None:
+        self.file = file
 
-def log_error(file:_io.TextIOWrapper , error:str) -> None:
-    file.write(f"[{time.strftime("%Y.%m.%d-%H.%M.%S")}] [INFO] {error}\n")
+    def log_info(self,info:str) -> None:
+        self.file.write(f"[{time.strftime("%Y.%m.%d-%H.%M.%S")}] [INFO] {info}\n")
+    def log_error(self,error:str) -> None:
+        self.file.write(f"[{time.strftime("%Y.%m.%d-%H.%M.%S")}] [ERROR] {error}\n")
