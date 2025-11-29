@@ -9,6 +9,7 @@ dependencies = [
     "pluggy==1.6.0",
     "pygments==2.19.2",
     "pytest==9.0.1"
+    "keyboard==0.13.5"
 ]
 
 [build-system]

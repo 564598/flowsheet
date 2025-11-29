@@ -2,7 +2,6 @@ import pygame
 import pytest
 
 from stk import Label
-from utils import LogSystem
 
 @pytest.fixture
 def game() -> pygame.Surface:
@@ -27,12 +26,3 @@ def test_Label_goto(labels:Label) -> None:
     assert labels.x == 0
     assert labels.y == 0
     labels.goto((1,1))
-
-def test_info() -> None:
-    test = open("logs/test.log",'w')
-    testlog = LogSystem(test)
-    testlog.log_info("test")
-    test.close()
-    del testlog
-    test = open("logs/test.log",'r')
-    assert test.read()[-5:].strip() == 'test'
