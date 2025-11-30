@@ -14,7 +14,7 @@ class Label:
                  foreground: tuple[int, int, int] = (0,0,0),
                  background: tuple[int, int, int] = (200,200,200),
                  bordercolor: tuple[int, int, int] = (0, 0, 0),
-                 fontname: str|None = None,
+                 fontname: str = "Arial",
                  fontsize: int = 32
                  ) -> None:
         """初始化各项参数"""

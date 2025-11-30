@@ -10,8 +10,6 @@ from typing import Dict, Set, Callable, Optional, List, Any
 import keyboard
 from keyboard import KeyboardEvent
 
-KEYBOARD_AVAILABLE = True
-
 class KeyboardHelper:
     """
     键盘辅助类，使用 keyboard 库提供可靠的键盘输入检测
@@ -62,11 +60,7 @@ class KeyboardHelper:
         return key_char_map
     
     def start(self) -> None:
-        """启动键盘监听"""
-        if not KEYBOARD_AVAILABLE:
-            print("错误: keyboard 库不可用")
-            return
-            
+        """启动键盘监听"""  
         if self._running:
             return
             
@@ -79,9 +73,6 @@ class KeyboardHelper:
     
     def _setup_keyboard_hooks(self) -> None:
         """设置 keyboard 库的事件钩子"""
-        if not KEYBOARD_AVAILABLE:
-            return
-            
         # 按键按下事件
         def on_press(event: KeyboardEvent) -> None:
             # 检查 event.name 是否为 None
@@ -91,7 +82,7 @@ class KeyboardHelper:
             key_name = event.name.lower()
             
             # 忽略过长的按键名（通常是特殊功能键）
-            if len(key_name) > 1 and key_name not in self._key_char_map:
+            if key_name not in self._key_char_map:
                 return
                 
             if key_name not in self._keys_pressed:
@@ -119,9 +110,6 @@ class KeyboardHelper:
     
     def stop(self) -> None:
         """停止键盘监听"""
-        if not KEYBOARD_AVAILABLE:
-            return
-            
         self._running = False
         
         # 移除所有 keyboard 钩子
@@ -152,43 +140,28 @@ class KeyboardHelper:
                 按键名称，如 'a', 'b', 'space' 等
             handler: 
                 处理函数，接收一个字符参数
-        """
-        if not KEYBOARD_AVAILABLE:
-            return
-            
+        """            
         key_name = key_name.lower()
         if key_name not in self._key_handlers:
             self._key_handlers[key_name] = []
         self._key_handlers[key_name].append(handler)
     
     def remove_key_handler(self, key_name: str, handler: Callable[[str], Any]) -> None:
-        """移除按键处理函数"""
-        if not KEYBOARD_AVAILABLE:
-            return
-            
+        """移除按键处理函数"""   
         key_name = key_name.lower()
         if key_name in self._key_handlers and handler in self._key_handlers[key_name]:
             self._key_handlers[key_name].remove(handler)
     
     def is_key_pressed(self, key_name: str) -> bool:
         """检查按键是否被按下"""
-        if not KEYBOARD_AVAILABLE:
-            return False
-            
         return key_name.lower() in self._keys_pressed
     
     def get_all_pressed_keys(self) -> List[str]:
         """获取当前按下的所有键"""
-        if not KEYBOARD_AVAILABLE:
-            return []
-            
         return list(self._keys_pressed)
     
     def get_key_char(self, key_name: str) -> Optional[str]:
-        """获取键名对应的字符"""
-        if not KEYBOARD_AVAILABLE:
-            return None
-            
+        """获取键名对应的字符"""   
         return self._key_char_map.get(key_name.lower())
 
 # 全局实例
