@@ -2,7 +2,7 @@
 Keyboard Helper - 解决Pygame键盘输入问题的辅助库
 使用 keyboard 库提供可靠的键盘输入检测，不依赖Pygame的文本输入系统
 
-注意：此模块版权属于Deepseek大模型
+此文件在AI辅助下生成，由项目作者进行修改、整合与发布。
 """
 
 import threading

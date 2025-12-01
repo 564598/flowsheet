@@ -4,6 +4,8 @@ flowsheet/
     |-- README.md
     |-- .gitignore
     |-- main.py ; 程序入口
+    |-- LICENSE
+    |-- ATTRIBUTION.md
     |-- .git/
     |   |-- ...
     |-- __pycache__/
