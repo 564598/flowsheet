@@ -1,5 +1,5 @@
 import pygame
-from typing import Callable,Any
+from typing import Callable, Any
 
 from .label import Label
 
@@ -15,47 +15,76 @@ class Button(Label):
                  height: int, 
                  x: int, 
                  y: int, 
-                 executed: Callable[[],Any] = kong,
-                 border: int = 1, 
-                 foreground: tuple[int, int, int] = (0,0,0), 
-                 background: tuple[int, int, int] = (180,180,180), 
-                 bordercolor: tuple[int, int, int] = (0,0,0), 
+                 executed: Callable[[], Any] = kong,
+                 border: int = 2,
+                 foreground: tuple[int, int, int] = (0, 0, 0), 
+                 background: tuple[int, int, int] = (180, 180, 180), 
+                 hover_background: tuple[int, int, int] = (160, 160, 160),
+                 press_background: tuple[int, int, int] = (140, 140, 140),
+                 bordercolor: tuple[int, int, int] = (0, 0, 0),
                  fontname: str = "Arial", 
                  fontsize: int = 32
                 ) -> None:
-        super().__init__(win, text, width, height, x, y, border, foreground, background, bordercolor, fontname, fontsize)
+        super().__init__(win, 
+                         text, 
+                         width, 
+                         height, 
+                         x, 
+                         y, 
+                         border, 
+                         foreground, 
+                         background, 
+                         bordercolor, 
+                         fontname, 
+                         fontsize
+                        )
         self.executed = executed
-        # self.down = False
-
-    def _is_collidepoint(self,pos: tuple[int,int]) -> bool:
+        self.hover_background = hover_background
+        self.press_background = press_background
+        self.original_background = background
+        self.is_hovered = False
+        self.is_pressed = False
+        self.original_border = border
+        
+    def _collidepoint(self, pos: tuple[int, int]) -> bool:
         """检测是否碰撞"""
         return self.rect.collidepoint(pos)
     
-    def check_event(self,event: pygame.event.Event):
-        """执行按钮按下操作"""
-        if event.type == pygame.MOUSEBUTTONDOWN and self._is_collidepoint(event.pos):
-            self.executed()
-    #         self.down = True
-    #     else:
-    #         self.down = False
+    def check_event(self, event: pygame.event.Event):
+        """处理按钮事件"""
+        if event.type == pygame.MOUSEMOTION:
+            self.is_hovered = self._collidepoint(event.pos)
+            
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if self._collidepoint(event.pos):
+                self.is_pressed = True
+                self.border = self.original_border + 2  
+                
+        elif event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+            if self.is_pressed and self._collidepoint(event.pos):
+                self.executed()
+            self.is_pressed = False
+            self.border = self.original_border
     
-    # def draw(self):
-    #     """绘制按钮"""
-    #     t = False
-    #     if self.down:
-    #         self.border += 5
-    #         t = True
-    #     if self.border > 0:
-    #         pygame.draw.rect(self.win, color=self.bordercolor, rect=self.border_rect)
+    def draw(self):
+        """绘制按钮"""
+        if self.is_pressed:
+            current_bg = self.press_background
+        elif self.is_hovered:
+            current_bg = self.hover_background
+        else:
+            current_bg = self.original_background
         
-    #     pygame.draw.rect(
-    #         self.win, 
-    #         color=self.background, 
-    #         rect=self.rect
-    #     )
+        self.background = current_bg
+        self.border_rect = pygame.Rect(
+            self.x - self.border, 
+            self.y - self.border, 
+            self.width + 2 * self.border, 
+            self.height + 2 * self.border
+        )
+        super().draw()
 
-    #     text_surf = self.font.render(self.text, True, self.foreground)
-    #     text_rect = text_surf.get_rect(center=self.rect.center)
-    #     self.win.blit(text_surf, text_rect)
-    #     if t:
-    #         self.border -= 5
+        if self.is_pressed:
+            overlay = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+            overlay.fill((0, 0, 0, 50))
+            self.win.blit(overlay, (self.x, self.y))

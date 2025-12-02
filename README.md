@@ -7,14 +7,19 @@
 （开发中）
 
 ## 文档
-说明、记录等见 `doc/` 文件夹。
+说明、记录等见doc文件夹。
+
 [pyproject.toml](doc/pyproject.toml)
+
 [requirements.txt](doc/requirements.txt)
+
 [requirements-test.txt](doc/requirements-test.txt)
+
 [项目结构导览](doc/structure.md)
 
 ## 开发与致谢
 本项目在开发中使用了AI编程助手进行辅助。所有代码均由开发者最终确定并集成。
+
 详见[ATTRIBUTION.md](ATTRIBUTION.md)
 
 ## 许可证
