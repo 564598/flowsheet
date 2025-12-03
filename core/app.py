@@ -1,6 +1,6 @@
 import pygame
 
-from stk import Button
+from stk import Button,Manu
 from utils import LogSystem,KeyboardHelper
 
 class App:
@@ -20,6 +20,26 @@ class App:
         self.l = Button(self.screen,"exit",50,30,500,500,executed=self._button_l_down)
         self.running = True
 
+        self.menu = Manu(
+            win=self.screen,
+            height=50,
+            button_num=2,
+            button_text=["文件", "退出"],
+            button_width=100,
+            executeds=[
+                lambda: self.log.log_info("按下按钮“文件”"),
+                self._button_l_down
+            ],
+            border=2,
+            foreground=(255, 255, 255),
+            background=(50, 50, 50),
+            hover_background=(70, 70, 70),
+            press_background=(30, 30, 30),
+            bordercolor=(100, 100, 100),
+            fontname="Microsoft YaHei",
+            fontsize=20
+        )
+
     def _exit(self) -> None:
         """退出程序"""
         self.running = False
@@ -31,13 +51,14 @@ class App:
         self._exit()
     
     def _button_l_down(self):
-        self.log.log_info("按下按钮“exit”")
+        self.log.log_info("按下按钮“exit”") 
         self._exit()
 
     def _draw(self) -> None:
         """绘制屏幕"""
         self.screen.fill((200,200,200))
         self.l.draw()
+        self.menu.draw()
         pygame.display.flip()
 
     def _check(self) -> None:
@@ -46,6 +67,7 @@ class App:
             if event.type == pygame.QUIT:
                 self._exit()
             self.l.check_event(event)
+            self.menu.check(event)
 
     def run(self) -> None:
         """开始程序"""
