@@ -41,7 +41,6 @@ flowsheet/
     |   |-- __init__.py
     |   |-- test_stk.py
     |   |-- test_log.py
-    |   |-- debug_SDL.py
     |-- utils/                  ; 工具函数
     |   |-- __pycache__/
     |   |   |-- ...

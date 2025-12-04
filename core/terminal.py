@@ -45,4 +45,6 @@ class Terminal:
             else:
                 print(f"ERROR:{e}")
             self.log.log_error(f"发生错误：{e}")
+        finally:
+            self.log_file.close()
         sys.exit(0)

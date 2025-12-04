@@ -15,7 +15,7 @@ class App:
         self.log.log_info("pygame初始化成功")
         self.keyer = KeyboardHelper()
         self.keyer.start()
-        self.keyer.add_key_handler('q', self._on_q_press)
+        self.keyer.add_combo_handler('ctrl','q',handler=self._on_q_press)
         self.log.log_info("keyboardHelper初始化成功")
         self.l = Button(self.screen,"exit",50,30,500,500,executed=self._button_l_down)
         self.running = True
@@ -43,11 +43,11 @@ class App:
     def _exit(self) -> None:
         """退出程序"""
         self.running = False
-        self.keyer.stop()
+        # self.keyer.stop()
 
-    def _on_q_press(self, char: str) -> None:
+    def _on_q_press(self) -> None:
         """Q键按下时的处理"""
-        self.log.log_info("按下Q键")
+        self.log.log_info("按下Ctrl+Q键")
         self._exit()
     
     def _button_l_down(self):
@@ -75,3 +75,4 @@ class App:
             self._draw()
             self._check()
             self.clock.tick(100)
+        self._exit
