@@ -1,11 +1,10 @@
 import pygame
-
-from stk import Button,Manu
-from utils import LogSystem,KeyboardHelper
+import stk
+import utils
 
 class App:
     """主程序管理"""
-    def __init__(self , log:LogSystem) -> None:
+    def __init__(self , log:utils.LogSystem) -> None:
         """初始化"""
         self.log = log
         pygame.init()
@@ -13,46 +12,31 @@ class App:
         pygame.display.set_caption(title="flowsheet")
         self.clock = pygame.time.Clock()
         self.log.log_info("pygame初始化成功")
-        self.keyer = KeyboardHelper()
+        self.keyer = utils.KeyboardHelper()
         self.keyer.start()
-        self.keyer.add_combo_handler('ctrl','q',handler=self._on_q_press)
+        self.keyer.add_combo_handler('ctrl','q',handler=self._exit)
         self.log.log_info("keyboardHelper初始化成功")
-        self.l = Button(self.screen,"exit",50,30,500,500,executed=self._button_l_down)
+        self.l = stk.Button(self.screen,"exit",50,30,500,500)
         self.running = True
 
-        self.menu = Manu(
+        self.menu = stk.Manu(
             win=self.screen,
             height=50,
             button_num=2,
             button_text=["文件", "退出"],
             button_width=100,
-            executeds=[
-                lambda: self.log.log_info("按下按钮“文件”"),
-                self._button_l_down
-            ],
-            border=2,
-            foreground=(255, 255, 255),
-            background=(50, 50, 50),
-            hover_background=(70, 70, 70),
-            press_background=(30, 30, 30),
-            bordercolor=(100, 100, 100),
             fontname="Microsoft YaHei",
             fontsize=20
         )
+        utils.EventSystem.bind_all(self,self.log,self.keyer,{'l':self.l},{'manu':self.menu.buttons})
 
+    @utils.on_button('l',"按下按钮“exit”")
+    @utils.on_combo('ctrl','q',log_message="按下Ctrl+Q键")
+    @utils.on_menu_button('manu',1,"按下按钮“退出”")
     def _exit(self) -> None:
         """退出程序"""
         self.running = False
-        # self.keyer.stop()
-
-    def _on_q_press(self) -> None:
-        """Q键按下时的处理"""
-        self.log.log_info("按下Ctrl+Q键")
-        self._exit()
-    
-    def _button_l_down(self):
-        self.log.log_info("按下按钮“exit”") 
-        self._exit()
+        self.keyer.stop()
 
     def _draw(self) -> None:
         """绘制屏幕"""
@@ -75,4 +59,4 @@ class App:
             self._draw()
             self._check()
             self.clock.tick(100)
-        self._exit
+        self._exit()

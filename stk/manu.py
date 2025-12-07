@@ -9,7 +9,7 @@ class Manu:
                  button_num:int,
                  button_text:list[str],
                  button_width:int = 20,
-                 executeds: list[Callable[[], Any]] = [kong],
+                 executeds: list[Callable[[], Any]] = [],
                  border: int = 2,
                  foreground: tuple[int, int, int] = (0, 0, 0), 
                  background: tuple[int, int, int] = (180, 180, 180), 
@@ -19,14 +19,15 @@ class Manu:
                  fontname: str = "Arial", 
                  fontsize: int = 32
                 ) -> None:
-        if button_num != len(button_text) or button_num != len(executeds):
+        if button_num != len(button_text):
             raise TypeError("传入参数不一致")
         self.win = win
         self.height = height
         self.button_num = button_num
         self.button_text = button_text
         self.button_width = button_width
-        self.executeds = executeds
+        if len(executeds) != 0: self.executeds=executeds
+        else: self.executeds = [kong for _ in range(button_num)]
         self.border = border
         self.foreground = foreground
         self.background = background
@@ -44,8 +45,8 @@ class Manu:
                         button_text[i],
                         width = self.button_width,
                         height = self.height,
-                        x = i*self.button_width,
-                        y = 0,
+                        x = i*self.button_width+self.border,
+                        y = self.border,
                         executed= self.executeds[i],
                         border = self.border,
                         foreground = self.foreground, 
@@ -65,8 +66,8 @@ class Manu:
             pygame.Rect(
                 0,
                 0,
-                self.win.get_size()[0],
-                self.height
+                self.win.get_size()[0]+self.border,
+                self.height+self.border+2
                 )
             )
         for b in self.buttons:
