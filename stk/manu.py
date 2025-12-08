@@ -6,8 +6,8 @@ class Manu:
     def __init__(self,
                  win:pygame.Surface,
                  height: int, 
-                 button_num:int,
-                 button_text:list[str],
+                 button_num:int = 0,
+                 button_text:list[str] = [],
                  button_width:int = 20,
                  executeds: list[Callable[[], Any]] = [],
                  border: int = 2,
@@ -41,7 +41,7 @@ class Manu:
         self.buttons = []
         self.buttons:list[Button]
         for i in range(self.button_num):
-            b = Button(win,
+            b = Button( win,
                         button_text[i],
                         width = self.button_width,
                         height = self.height,
@@ -56,7 +56,7 @@ class Manu:
                         bordercolor = self.bordercolor,
                         fontname = self.fontname, 
                         fontsize = self.fontsize
-                        )
+                      )
             self.buttons.append(b)
         
     def draw(self):

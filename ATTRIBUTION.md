@@ -11,6 +11,7 @@
 AI修改部分列表如下：（随每次提交更新）
 - [button.py](stk/button.py)
 - [keyboardhelper.py](utils/keyboard_helper.py)
+- [event_decorators.py](utils/event_decorators.py)
 - [README.md](README.md)
 - [ATTRIBUTION.md](ATTRIBUTION.md)
 

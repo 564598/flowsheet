@@ -29,6 +29,7 @@ flowsheet/
     │   |-- __init__.py
     │   |-- label.py
     │   |-- button.py
+    |   |-- manu.py
     │   ; |-- widgets.py         ; 未来其他组件
     |-- config/                 ; 配置文件
     |   |-- __pycache__/
@@ -46,6 +47,8 @@ flowsheet/
     |   |   |-- ...
     |   |-- __init__.py
     |   |-- log_write.py
+    |   |-- keyboard_helper.py
+    |   |-- event_decorators.py
     |-- doc/
     |   |-- structure.md
     |   |-- pyproject.toml
