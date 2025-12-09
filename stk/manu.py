@@ -11,6 +11,7 @@ class Manu:
                  button_width:int = 20,
                  executeds: list[Callable[[], Any]] = [],
                  border: int = 2,
+                 annotations:list[str|None] = [],
                  foreground: tuple[int, int, int] = (0, 0, 0), 
                  background: tuple[int, int, int] = (180, 180, 180), 
                  hover_background: tuple[int, int, int] = (160, 160, 160),
@@ -26,8 +27,10 @@ class Manu:
         self.button_num = button_num
         self.button_text = button_text
         self.button_width = button_width
-        if len(executeds) != 0: self.executeds=executeds
-        else: self.executeds = [kong for _ in range(button_num)]
+        if len(executeds) != 0: 
+            self.executeds=executeds
+        else: 
+            self.executeds = [kong for _ in range(button_num)]
         self.border = border
         self.foreground = foreground
         self.background = background
@@ -36,27 +39,30 @@ class Manu:
         self.bordercolor = bordercolor
         self.fontname = fontname
         self.fontsize = fontsize
+        self.annotations = annotations
 
         self.font = pygame.font.SysFont(fontname, fontsize)
         self.buttons = []
         self.buttons:list[Button]
         for i in range(self.button_num):
-            b = Button( win,
-                        button_text[i],
-                        width = self.button_width,
-                        height = self.height,
-                        x = i*self.button_width+self.border,
-                        y = self.border,
-                        executed= self.executeds[i],
-                        border = self.border,
-                        foreground = self.foreground, 
-                        background = self.background, 
-                        hover_background=self.hover_backgroud,
-                        press_background = self.press_backgroud,
-                        bordercolor = self.bordercolor,
-                        fontname = self.fontname, 
-                        fontsize = self.fontsize
-                      )
+            b = Button( 
+                win,
+                button_text[i],
+                width = self.button_width,
+                height = self.height,
+                x = i*self.button_width+self.border,
+                y = self.border,
+                annotation = self.annotations[i],
+                executed= self.executeds[i],
+                border = self.border,
+                foreground = self.foreground, 
+                background = self.background, 
+                hover_background=self.hover_backgroud,
+                press_background = self.press_backgroud,
+                bordercolor = self.bordercolor,
+                fontname = self.fontname, 
+                fontsize = self.fontsize
+            )
             self.buttons.append(b)
         
     def draw(self):
@@ -72,6 +78,8 @@ class Manu:
             )
         for b in self.buttons:
             b.draw()
+        for b in self.buttons:
+            b.label_draw()
 
     def check(self,event:pygame.event.Event):
         for b in self.buttons:

@@ -40,7 +40,15 @@ class App:
 
     def _stk_init(self) -> None:
         """初始化各项组件"""
-        self.l = stk.Button(self.screen,"exit",50,30,500,500)
+        self.l = stk.Button(
+            self.screen,
+            "exit",
+            50,
+            30,
+            500,
+            500,
+            annotation='exit'
+        )
         self.menu = stk.Manu(
             win=self.screen,
             height=50,
@@ -48,7 +56,8 @@ class App:
             button_text=["文件", "退出"],
             button_width=100,
             fontname="Microsoft YaHei",
-            fontsize=20
+            fontsize=20,
+            annotations=['file(Ctrl+F)','exit(Ctrl+Q)']
         )
         self.log.log_info("stk组件初始化成功")
 

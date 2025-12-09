@@ -6,6 +6,7 @@ flowsheet/
     |-- main.py ; 程序入口
     |-- LICENSE
     |-- ATTRIBUTION.md
+    |-- PURPOSE.md
     |-- .git/
     |   |-- ...
     |-- __pycache__/

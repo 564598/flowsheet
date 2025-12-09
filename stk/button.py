@@ -16,6 +16,7 @@ class Button(Label):
                  x: int, 
                  y: int, 
                  executed: Callable[[], Any] = kong,
+                 annotation: str|None = None,
                  border: int = 2,
                  foreground: tuple[int, int, int] = (0, 0, 0), 
                  background: tuple[int, int, int] = (180, 180, 180), 
@@ -45,15 +46,36 @@ class Button(Label):
         self.is_hovered = False
         self.is_pressed = False
         self.original_border = border
+        self.annotation = annotation
+        self.fontsize = fontsize
+        self.fontname = fontname
+        self.time = 0
         
     def _collidepoint(self, pos: tuple[int, int]) -> bool:
         """检测是否碰撞"""
         return self.rect.collidepoint(pos)
     
-    def check_event(self, event: pygame.event.Event):
+    def check_event(self, event: pygame.event.Event) -> None:
         """处理按钮事件"""
         if event.type == pygame.MOUSEMOTION:
             self.is_hovered = self._collidepoint(event.pos)
+            self.pos = event.pos
+            if self.is_hovered and self.annotation:
+                self.label = Label(
+                    self.win,
+                    self.annotation,
+                    len(self.annotation) * 8,
+                    16, 
+                    self.pos[0], 
+                    self.pos[1],
+                    background=(255,255,245),
+                    bordercolor=(150,150,150),
+                    fontname=self.fontname,
+                    fontsize=16
+                )
+                self.time += 1
+            else:
+                self.time = 0
             
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if self._collidepoint(event.pos):
@@ -66,7 +88,7 @@ class Button(Label):
             self.is_pressed = False
             self.border = self.original_border
     
-    def draw(self):
+    def draw(self) -> None:
         """绘制按钮"""
         if self.is_pressed:
             current_bg = self.press_background
@@ -88,3 +110,9 @@ class Button(Label):
             overlay = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
             overlay.fill((0, 0, 0, 50))
             self.win.blit(overlay, (self.x, self.y))
+        self.label_draw()
+
+    def label_draw(self) -> None:
+        """绘制标签"""
+        if self.is_hovered and self.time >= 3:
+            self.label.draw()
