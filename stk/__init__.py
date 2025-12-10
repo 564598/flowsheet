@@ -1,6 +1,7 @@
 """管理包"""
-from .label import Label # type: ignore
-from .button import Button # type: ignore
-from .manu import Manu # type: ignore
+from .label import *
+from .button import *
+from .manu import *
+from .win import *
 
-__version__ = '0.0.2'
+__version__ = '0.0.4'

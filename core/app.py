@@ -2,25 +2,19 @@ import pygame
 import stk
 import utils
 
-class App:
+class App(stk.Game):
     """主程序管理"""
     def __init__(self , log:utils.LogSystem) -> None:
         """初始化应用"""
         self.log = log
-        self._pygame_init()
+        super().__init__()
+        self.window.update_window((1000,1000))
+        self.window.update_title(title="flowsheet")
+        self.window.add_checks(pygame.QUIT,self._exit)
+        self.log.log_info("pygame及应用属性初始化成功")
         self._keyboard_init()
         self._stk_init()
         self._eventsystem_init()
-
-    def _pygame_init(self) -> None:
-        """初始化pygame"""
-        pygame.init()
-        self.screen = pygame.display.set_mode((1000,1000))
-        pygame.display.set_caption(title="flowsheet")
-        self.clock = pygame.time.Clock()
-
-        self.running = True
-        self.log.log_info("pygame及应用属性初始化成功")
 
     def _keyboard_init(self) -> None:
         """初始化KeyboardHelper"""
@@ -41,7 +35,7 @@ class App:
     def _stk_init(self) -> None:
         """初始化各项组件"""
         self.l = stk.Button(
-            self.screen,
+            self.window,
             "exit",
             50,
             30,
@@ -50,7 +44,7 @@ class App:
             annotation='exit'
         )
         self.menu = stk.Manu(
-            win=self.screen,
+            win=self.window,
             height=50,
             button_num=2,
             button_text=["文件", "退出"],
@@ -60,13 +54,12 @@ class App:
             annotations=['file(Ctrl+F)','exit(Ctrl+Q)']
         )
         self.log.log_info("stk组件初始化成功")
+        self.stks = [self.l,self.menu]
+        self.window.stk_event(self.stks)
 
     def run(self) -> None:
         """开始程序"""
-        while self.running:
-            self._draw()
-            self._check()
-            self.clock.tick(100)
+        super().run()
         self._exit()
     
     @utils.on_button('l',"按下按钮“exit”")
@@ -77,17 +70,16 @@ class App:
         self.running = False
         self.keyer.stop()
 
-    def _draw(self) -> None:
-        """绘制屏幕"""
-        self.screen.fill((200,200,200))
-        self.l.draw()
-        self.menu.draw()
-        pygame.display.flip()
+    # def _draw(self) -> None:
+    #     """绘制屏幕"""
+    #     self.l.draw()
+    #     self.menu.draw()
+    #     super()._draw()
 
-    def _check(self) -> None:
-        """检测事件"""
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                self._exit()
-            self.l.check_event(event)
-            self.menu.check(event)
+    # def _check(self) -> None:
+    #     """检测事件"""
+    #     for event in pygame.event.get():
+    #         if event.type == pygame.QUIT:
+    #             self._exit()
+    #         self.l.check(event)
+    #         self.menu.check(event)

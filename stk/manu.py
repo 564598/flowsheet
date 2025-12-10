@@ -1,10 +1,11 @@
 import pygame
 from typing import Any,Callable
 from .button import Button,kong
+from .win import Windows
 
 class Manu:
     def __init__(self,
-                 win:pygame.Surface,
+                 win:Windows,
                  height: int, 
                  button_num:int = 0,
                  button_text:list[str] = [],
@@ -20,6 +21,7 @@ class Manu:
                  fontname: str = "Arial", 
                  fontsize: int = 32
                 ) -> None:
+        """初始化Manu"""
         if button_num != len(button_text):
             raise TypeError("传入参数不一致")
         self.win = win
@@ -66,13 +68,14 @@ class Manu:
             self.buttons.append(b)
         
     def draw(self):
+        """绘制"""
         pygame.draw.rect(
-            self.win,
+            self.win.get_window(),
             self.background,
             pygame.Rect(
                 0,
                 0,
-                self.win.get_size()[0]+self.border,
+                self.win.get_window().get_size()[0]+self.border,
                 self.height+self.border+2
                 )
             )
@@ -82,5 +85,6 @@ class Manu:
             b.label_draw()
 
     def check(self,event:pygame.event.Event):
+        """检测按钮是否被按下"""
         for b in self.buttons:
-            b.check_event(event=event)
+            b.check(event=event)

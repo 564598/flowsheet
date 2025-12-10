@@ -8,8 +8,9 @@ def kong():
 
 class Button(Label):
     """按钮类"""
+    from .win import Windows
     def __init__(self, 
-                 win: pygame.Surface, 
+                 win: Windows, 
                  text: str, 
                  width: int, 
                  height: int, 
@@ -55,7 +56,7 @@ class Button(Label):
         """检测是否碰撞"""
         return self.rect.collidepoint(pos)
     
-    def check_event(self, event: pygame.event.Event) -> None:
+    def check(self, event: pygame.event.Event) -> None:
         """处理按钮事件"""
         if event.type == pygame.MOUSEMOTION:
             self.is_hovered = self._collidepoint(event.pos)
@@ -109,7 +110,7 @@ class Button(Label):
         if self.is_pressed:
             overlay = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
             overlay.fill((0, 0, 0, 50))
-            self.win.blit(overlay, (self.x, self.y))
+            self.win.get_window().blit(overlay, (self.x, self.y))
         self.label_draw()
 
     def label_draw(self) -> None:
